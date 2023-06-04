@@ -2,3 +2,7 @@ heuristico_original: https://drive.google.com/file/d/1On94tDcejvlU2-WVScE9xckbbY
 heuristico_giros: https://drive.google.com/file/d/1OoKxb22Ukae3S5mqvydGTD-SFFi33Gks/view?usp=sharing
 pid_original: https://drive.google.com/file/d/1Ow1zAgWdgfEnrANLvHfHHg6ZgDAMCf1w/view?usp=sharing
 pid_giros: https://drive.google.com/file/d/1OqYCh8DnIqYc6bwolhOXoOjlFaoPlYo9/view?usp=sharing
+sin_area: https://drive.google.com/file/d/1P8gdoWAcJiavmkkna3Sayzmks4C2nRW4/view?usp=sharing
+con_area: https://drive.google.com/file/d/1PHnFHHQbV2fd3_gj3pcnbQD4W36hNnNd/view?usp=sharing
+prueba_sensores: https://drive.google.com/file/d/1PIFCdkl4vdcWfEKrvPH2EdGyXeLERiBh/view?usp=sharing
+rojo: https://drive.google.com/file/d/1PMTCipatrmtaswXSKEIvy_rA4_f5I_eo/view?usp=sharing

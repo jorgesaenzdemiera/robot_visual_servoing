@@ -20,7 +20,7 @@ import robotica
 import matplotlib.pyplot as plt
 import numpy as np
 
-kp_giros = 0.01
+kp_giros = 0.015
 ki_giros = 0.001
 kd_giros = 0.01
 
@@ -60,9 +60,10 @@ def calcular_centro(img):
     contours, hierarchy = cv2.findContours(image=mask, mode=cv2.RETR_TREE, method=cv2.CHAIN_APPROX_NONE)
     if contours:
         moments = cv2.moments(contours[0])
-        if moments['m00'] != 0:
-            cx = int(moments['m10']/moments['m00'])
-            cy = int(moments['m01']/moments['m00'])
+        area = moments['m00']
+        if area != 0:
+            cx = int(moments['m10']/area)
+            cy = int(moments['m01']/area)
             centro = (cx, cy)
             img_copy = img.copy()
             img_contornos = cv2.drawContours(image=img_copy, contours=contours, contourIdx=-1, color=(0, 255, 0), thickness=2, lineType=cv2.LINE_AA)
@@ -73,8 +74,10 @@ def calcular_centro(img):
     else:
         centro = None
         img_centro = img
-    return(centro, img_centro)
+        area = 0
+    return(centro, area, img_centro)
 
+    
 
 def main(args=None):
     coppelia = robotica.Coppelia()
@@ -82,21 +85,25 @@ def main(args=None):
     pid_giros = PID(kp_giros, ki_giros, kd_giros)
     coppelia.start_simulation()
     while coppelia.is_running():
+        #readings = robot.get_sonar() NO FUNCIONA
         img = robot.get_image()
-        centro, img_centro = calcular_centro(img)
+        centro, area, img_centro = calcular_centro(img)
         if centro:
+            velocidad = 4
+            if area > 60000:
+               velocidad -= 1
+            elif area > 55000:
+                velocidad -= 0.5
             salida_giros = pid_giros.calcular_salida(128, centro[0])
-            print(salida_giros)
             cv2.imshow('opencv', img_centro)
             cv2.waitKey(1)
-            robot.set_speed(-salida_giros +4, salida_giros +4) 
+            robot.set_speed(-salida_giros + velocidad, salida_giros + velocidad) 
         else:
             cv2.imshow('opencv', img_centro)
             cv2.waitKey(1)
             robot.set_speed(0,0)
     coppelia.stop_simulation()
     cv2.destroyAllWindows()
-
 
 if __name__ == '__main__':
     main()
